@@ -226,6 +226,23 @@ describe('rollout', function () {
     })
   })
 
+  it('can retrieve an empty value for non-existent mod', function (done) {
+    rollout.handler('super_secret', {
+      foo: {
+        percentage: 12
+      },
+      bar: {
+        percentage: 34
+      }
+    })
+    rollout.on('ready', function () {
+      rollout.mods('not_found').then(function (mods) {
+        expect(Object.keys(mods).length === 0).to.be.true
+        done()
+      })
+    })
+  })
+
   it('can retreive all flagnames', function () {
     var o = {
       foo: {
@@ -236,4 +253,5 @@ describe('rollout', function () {
     rollout.handler('huzzah', o)
     expect(rollout.flags()).to.deep.equal(['youza', 'huzzah'])
   })
+
 })

@@ -119,7 +119,8 @@ Rollout.prototype.mods = function (name) {
   return when.promise(function (resolve) {
     client.mget(keys, function (err, values) {
       var flags = {}
-      values.forEach(function (val, i) {
+      var _values = (values || [])
+      _values.forEach(function (val, i) {
         flags[names[i]] = val
       })
       resolve(flags)
